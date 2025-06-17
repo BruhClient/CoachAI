@@ -66,7 +66,7 @@ const ProfilePicUploader = ({
 
   return (
     <div className="flex justify-center">
-      <Avatar className="w-32 h-32 pointer-events-auto ">
+      <Avatar className="w-24 h-24 pointer-events-auto ">
         {isPending && (
           <div className="w-full h-full bg-black absolute opacity-50 flex justify-center items-center z-50">
             <ClipLoader color="white" className="opacity-100" />
@@ -78,7 +78,7 @@ const ProfilePicUploader = ({
           alt="@profile"
         />
         <AvatarFallback>
-          <User />
+          <User size={20} />
         </AvatarFallback>
         <input
           type="file"

@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { format } from "date-fns";
+import { getUserById, updateUserById } from "@/server/db/users";
+import { formatSecondsToMinutes } from "@/lib/utils";
 async function getRawBody(
   readable: ReadableStream<Uint8Array>
 ): Promise<Buffer> {
@@ -47,30 +49,30 @@ export async function POST(req: NextRequest) {
 
   try {
     switch (eventType) {
-      case "checkout.session.completed": {
-      }
-      case "invoice.paid": {
+      case "payment_intent.succeeded": {
         const {
-          customer_email,
-          hosted_invoice_url,
-          amount_paid,
           id,
+          metadata: { userId, seconds },
+          amount,
+        } = event.data.object;
 
-          customer_name,
-          metadata,
-        } = event.data.object as Stripe.Invoice;
+        const existingUser = await getUserById(userId);
 
-        const planType = metadata!.plan;
-
-        await sendPaymentConfirmationEmail(
-          customer_email!,
-          customer_name ?? "Customer",
-          id!,
-          amount_paid / 100,
-          format(Date.now(), "dd MMM yyyy"),
-          hosted_invoice_url!,
-          planType!
-        );
+        if (existingUser) {
+          await updateUserById(userId, {
+            seconds: existingUser.seconds + parseInt(seconds),
+          });
+          // @ts-ignore
+          console.log((amount / 100).toFixed(2));
+          await sendPaymentConfirmationEmail(
+            existingUser.email!,
+            existingUser.name!,
+            id!,
+            (amount / 100).toFixed(2),
+            format(Date.now(), "dd MMM yyyy"),
+            formatSecondsToMinutes(parseInt(seconds))
+          );
+        }
       }
     }
     return new NextResponse("Success");

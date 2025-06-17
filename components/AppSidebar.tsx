@@ -5,36 +5,35 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Bot, Home, Plus, Settings } from "lucide-react";
 import SidebarHead from "./sidebar/SidebarHead";
 import SidebarFoot from "./sidebar/SidebarFoot";
 import { useRouter } from "next/navigation";
 
-const items = [
+const platformItems = [
   {
     title: "Home",
     url: "/dashboard",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Companions",
+    url: "/companions",
+    icon: Bot,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Create",
+    url: "/companions/new",
+    icon: Plus,
   },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
+];
+
+const accountItems = [
   {
     title: "Settings",
     url: "/settings",
@@ -49,10 +48,31 @@ export function AppSidebar() {
       <SidebarHead />
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenu>
-                {items.map((item) => (
+                {platformItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      onClick={() => router.push(item.url)}
+                    >
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Account</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenu>
+                {accountItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       tooltip={item.title}

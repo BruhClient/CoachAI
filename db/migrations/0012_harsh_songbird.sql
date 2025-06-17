@@ -1,0 +1,1 @@
+ALTER TABLE "sessionHistories" ADD COLUMN "duration" integer NOT NULL;

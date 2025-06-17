@@ -1,0 +1,1 @@
+ALTER TABLE "companions" ADD COLUMN "name" text NOT NULL;

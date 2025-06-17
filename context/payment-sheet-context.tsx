@@ -4,9 +4,9 @@ import { createContext, useContext, useState } from "react";
 
 type PaymentSheetContextType = {
   isOpen: boolean;
-  open: (priceId: string) => void;
+  open: (purchasableSeconds: number) => void;
   close: () => void;
-  priceId: string | null;
+  purchasableSeconds: number | null;
 };
 
 const PaymentSheetContext = createContext<PaymentSheetContextType | undefined>(
@@ -19,20 +19,24 @@ export const PaymentSheetProvider = ({
   children: React.ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [priceId, setPriceId] = useState<string | null>(null);
+  const [purchasableSeconds, setPurchasableSeconds] = useState<number | null>(
+    null
+  );
 
-  const open = (newPriceId: string) => {
-    setPriceId(newPriceId);
+  const open = (seconds: number) => {
+    setPurchasableSeconds(seconds);
     setIsOpen(true);
   };
 
   const close = () => {
     setIsOpen(false);
-    setPriceId(null);
+    setPurchasableSeconds(null);
   };
 
   return (
-    <PaymentSheetContext.Provider value={{ isOpen, open, close, priceId }}>
+    <PaymentSheetContext.Provider
+      value={{ isOpen, open, close, purchasableSeconds }}
+    >
       {children}
     </PaymentSheetContext.Provider>
   );

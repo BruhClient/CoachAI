@@ -1,3 +1,4 @@
+import Demo from "@/components/common/Demo";
 import ForgetPasswordForm from "@/components/forms/auth/ForgotPasswordForm";
 import Logo from "@/components/Logo";
 
@@ -10,11 +11,7 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="hidden lg:block lg:w-[60vw] bg-muted">
-        <img
-          src="/hero-image.jpg"
-          alt="Login Hero"
-          className="w-full h-full object-cover"
-        />
+        <Demo />
       </div>
       <div className="absolute top-4 left-4">
         <Logo />

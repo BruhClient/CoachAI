@@ -6,10 +6,16 @@ import {
   primaryKey,
   integer,
   pgEnum,
+  jsonb,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
 export const userPlanEnum = pgEnum("user_plan", ["Free", "Pro", "Premium"]);
+
+export const companionStyleEnum = pgEnum("companion_style", [
+  "formal",
+  "casual",
+]);
 
 export const users = pgTable("user", {
   id: text("id")
@@ -22,6 +28,9 @@ export const users = pgTable("user", {
   isOauth: boolean("isOauth").notNull().default(false),
   hashedPassword: text("hashedPassword"),
   plan: userPlanEnum("plan").default("Free").notNull(),
+  seconds: integer("seconds")
+    .notNull()
+    .default(10 * 60),
 });
 
 export const accounts = pgTable(
@@ -103,3 +112,38 @@ export const authenticators = pgTable(
     },
   ]
 );
+
+export const companions = pgTable("companions", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  authorId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  subject: text("subject").notNull(),
+  topic: text("topic").notNull(),
+  style: text("style").notNull(),
+  voice: text("voice").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  duration: integer("duration").notNull(),
+});
+
+export const sessionHistories = pgTable("sessionHistories", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  authorId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  messages: jsonb("messages").notNull(),
+  duration: integer("duration").notNull(),
+  companionName: text("companionName").notNull(),
+  companionTopic: text("companionTopic").notNull(),
+  companionSubject: text("companionSubject").notNull(),
+  companionId: text("companionId")
+    .notNull()
+    .references(() => companions.id, { onDelete: "cascade" }),
+});

@@ -14,10 +14,9 @@ import {
 interface PaymentConfirmationEmailProps {
   customerName: string;
   invoiceNumber: string;
-  amountPaid: number;
+  amountPaid: string;
   paymentDate: string;
-  receiptUrl: string;
-  planType: string; // <-- Added planType
+  durationBought: string;
 }
 
 export function PaymentConfirmationEmail({
@@ -25,8 +24,7 @@ export function PaymentConfirmationEmail({
   invoiceNumber,
   amountPaid,
   paymentDate,
-  receiptUrl,
-  planType,
+  durationBought,
 }: PaymentConfirmationEmailProps) {
   return (
     <Html>
@@ -54,7 +52,7 @@ export function PaymentConfirmationEmail({
               Hi {customerName},
             </Text>
             <Text style={{ fontSize: "16px", color: "#555" }}>
-              Thank you for subscribing to the <strong>{planType}</strong> plan.
+              YOu have bought <strong>{durationBought}</strong> mins.
             </Text>
             <Text style={{ fontSize: "16px", color: "#555" }}>
               We have received your payment for invoice{" "}
@@ -65,21 +63,7 @@ export function PaymentConfirmationEmail({
               <br />
               Payment Date: <strong>{paymentDate}</strong>
             </Text>
-            <Text style={{ fontSize: "16px", color: "#555" }}>
-              You can view your receipt here:
-            </Text>
-            <Link
-              href={receiptUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "#346df1",
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              View Receipt
-            </Link>
+
             <Text
               style={{ fontSize: "16px", color: "#555", marginTop: "20px" }}
             >

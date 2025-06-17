@@ -54,10 +54,9 @@ export const sendPaymentConfirmationEmail = async (
   email: string,
   customerName: string,
   invoiceNumber: string,
-  amountPaid: number,
+  amountPaid: string,
   paymentDate: string,
-  receiptUrl: string,
-  planType: string
+  durationBought: string
 ) => {
   try {
     await resend.emails.send({
@@ -67,10 +66,9 @@ export const sendPaymentConfirmationEmail = async (
       react: PaymentConfirmationEmail({
         customerName,
         invoiceNumber,
-        planType,
+        durationBought,
         amountPaid,
         paymentDate,
-        receiptUrl,
       }),
     });
     return {

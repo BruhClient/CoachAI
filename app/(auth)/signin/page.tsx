@@ -1,3 +1,4 @@
+import Demo from "@/components/common/Demo";
 import SignInForm from "@/components/forms/auth/SignInForm";
 import Logo from "@/components/Logo";
 
@@ -9,12 +10,8 @@ export default function LoginPage() {
           <SignInForm />
         </div>
       </div>
-      <div className="hidden lg:block lg:w-[60vw] bg-muted">
-        <img
-          src="/hero-image.jpg"
-          alt="Login Hero"
-          className="w-full h-full object-cover"
-        />
+      <div className="hidden lg:flex lg:w-[60vw] px-4   justify-center items-center">
+        <Demo />
       </div>
       <div className="absolute top-4 left-4">
         <Logo />

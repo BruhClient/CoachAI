@@ -2,35 +2,33 @@
 
 import { pricingPlans } from "@/data/pricingPlans";
 import { auth } from "@/lib/auth";
+import { pricePerSecond } from "@/lib/constants";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 
-export async function createCheckout({ priceId }: { priceId: string }) {
+export async function createCheckout({
+  purchasableSeconds,
+}: {
+  purchasableSeconds: number;
+}) {
   // Create Checkout Sessions from body params.
 
   const userSession = await auth();
   if (!userSession) return null;
 
-  const planType = pricingPlans.find((plan) => plan.priceId === priceId)!.name;
-  const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded",
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, price_1234) of
-        // the product you want to sell
-        price: priceId,
+  const price = purchasableSeconds * pricePerSecond;
 
-        quantity: 1,
-      },
-    ],
-    customer_email: userSession.user.email as string,
+  const amount = Math.round(purchasableSeconds * pricePerSecond * 100); // Convert to cents
 
-    mode: "subscription",
-    return_url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency: "usd",
+    automatic_payment_methods: { enabled: true },
     metadata: {
-      plan: planType,
+      userId: userSession.user.id,
+      seconds: purchasableSeconds.toString(),
     },
   });
 
-  return session.client_secret;
+  return paymentIntent.client_secret;
 }

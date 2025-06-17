@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, Edit2 } from "lucide-react";
 import { MotionDiv } from "@/components/Motion";
 import { containerVariants } from "@/lib/variants";
 import { showErrorToast, showSuccessToast } from "@/lib/toast";
@@ -51,18 +51,18 @@ const UpdateUsernameButton = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-2 max-w-[500px] w-full"
+        className="flex items-center gap-2 w-full "
       >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem className="w-full">
-              <div className="relative flex items-center">
+              <div className="relative flex items-center w-full ">
                 <FormControl>
                   <Input
                     {...field}
-                    className="py-5 placeholder:font-semibold px-4"
+                    className="py-5 placeholder:font-semibold px-4 w-full"
                     placeholder="you@example.com"
                   />
                 </FormControl>
@@ -89,8 +89,8 @@ const UpdateUsernameButton = ({
           )}
         />
 
-        <Button className="h-full" disabled={isPending}>
-          Update
+        <Button disabled={isPending} size={"icon"}>
+          <Edit2 />
         </Button>
       </form>
     </Form>

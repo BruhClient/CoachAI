@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "xujuhlihsd.ufs.sh",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

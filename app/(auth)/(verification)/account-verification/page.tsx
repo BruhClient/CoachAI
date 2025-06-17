@@ -1,3 +1,4 @@
+import Demo from "@/components/common/Demo";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { sendVerificationEmail } from "@/server/actions/auth/mail";
@@ -68,11 +69,7 @@ const page = async ({
           </div>
         </div>
         <div className="hidden lg:block lg:w-[60vw] bg-muted">
-          <img
-            src="/hero-image.jpg"
-            alt="Login Hero"
-            className="w-full h-full object-cover"
-          />
+          <Demo />
         </div>
         <div className="absolute top-4 left-4">
           <Logo />
@@ -97,11 +94,7 @@ const page = async ({
           </div>
         </div>
         <div className="hidden lg:block lg:w-[60vw] bg-muted">
-          <img
-            src="/hero-image.jpg"
-            alt="Login Hero"
-            className="w-full h-full object-cover"
-          />
+          <Demo />
         </div>
         <div className="absolute top-4 left-4">
           <Logo />
@@ -129,11 +122,7 @@ const page = async ({
         </div>
       </div>
       <div className="hidden lg:block lg:w-[60vw] bg-muted">
-        <img
-          src="/hero-image.jpg"
-          alt="Login Hero"
-          className="w-full h-full object-cover"
-        />
+        <Demo />
       </div>
       <div className="absolute top-4 left-4">
         <Logo />

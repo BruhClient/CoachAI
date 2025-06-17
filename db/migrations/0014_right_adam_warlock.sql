@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "seconds" integer DEFAULT 600 NOT NULL;
