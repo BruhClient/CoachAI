@@ -51,6 +51,7 @@
     "recharts": "^2.15.3",
     "resend": "^4.5.2",
     "sonner": "^2.0.5",
+    "stripe": "^18.2.1",
     "tailwind-merge": "^3.3.1",
     "uploadthing": "^7.7.2",
     "uuid": "^11.1.0",
